@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            console.log( 'inline script 1 - before...' );
+        </script>
+
+        <!-- remove async attr to force blocking -->
+        <script async src="async.js"></script>
+
+        <script>
+            console.log( 'inline script 1 - after...' );
+        </script>
+
+        <script>
+            console.log( 'inline script 2 - before...' );
+        </script>
+
+        <!-- the async attr doesn't have an affect, this code still blocks -->
+        <script async>
+            function sleepInternal(milliSeconds) {
+                var startTime = new Date().getTime();
+                while (new Date().getTime() < startTime + milliSeconds);
+            }
+
+            console.log('sleep internal - before: %s', new Date());
+            sleepInternal(4000);  // sleep for 4 seconds
+            console.log('sleep internal - after: %s', new Date());
+        </script>
+        
+        <script>
+            console.log( 'inline script 2 - after...' );
+        </script>
+    </head>
+    <body>
+        <h1>Async</h1>
+    </body>
+</html>
